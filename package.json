@@ -1,16 +1,29 @@
 {
-  "name": "lazai",
+  "name": "lazaiii",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hariniha/SDK-Laz.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
+  "bugs": {
+    "url": "https://github.com/Hariniha/SDK-Laz/issues"
+  },
+  "homepage": "https://github.com/Hariniha/SDK-Laz#readme",
   "dependencies": {
-    "axios": "^1.12.2"
+    "alith": "^0.12.3",
+    "axios": "^1.12.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^17.2.3",
+    "ethers": "^6.15.0",
+    "node-fetch": "^3.3.2"
   }
 }
