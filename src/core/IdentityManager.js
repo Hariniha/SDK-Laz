@@ -1,20 +1,18 @@
-export default class IdentityManager {
-  static create(options = {}) {
-    const identity = {
-      id: `lazai-id-${Date.now()}`,
-      wallet: options.wallet || null,
-      name: options.name || null,
-      createdAt: Date.now(),
-      metadata: options.metadata || {},
-      personality: {
-        tone: options.tone || "friendly",
-        style: options.style || "concise",
-        shortBio: options.shortBio || "",
-        extra: options.extra || {}
-      }
-    };
+// src/core/IdentityManager.js
+import crypto from "crypto";
 
-    
-    return identity;
+export default class IdentityManager {
+  constructor() {
+    this.identity = this.createIdentity();
+  }
+
+  createIdentity() {
+    // generate deterministic identity
+    const id = crypto.randomBytes(8).toString("hex");
+    return `lazai-${id}`;
+  }
+
+  getIdentity() {
+    return this.identity;
   }
 }
