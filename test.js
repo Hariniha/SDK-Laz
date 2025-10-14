@@ -1,11 +1,15 @@
-// test.js
+import IdentityManager from "./src/core/IdentityManager.js";
+import AgentConnector from "./src/core/AgentConnector.js";
 import { LazAIHybrid } from "./src/index.js";
-import 'dotenv/config';
+
+const identityMgr = new IdentityManager();
+const identity = identityMgr.getIdentity();
+
+const session = AgentConnector.attach(identity, { tone: "friendly", shortBio: "I assist users" });
 
 const lazai = new LazAIHybrid(process.env);
+// apply session persona to the hybrid instance
+lazai.setPersonality(session.getPersonality());
 
-(async () => {
-  const res = await lazai.ask("What makes LazAI Network unique,give a short answer?");
-  console.log("\n✅ Final Hybrid Output:");
-  console.log(res);
-})();
+const reply = await lazai.ask("Write a short intro about our project.");
+console.log(reply);
