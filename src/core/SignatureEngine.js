@@ -1,4 +1,4 @@
-import { signWithWalletMessage, verifySignature, addressFromPrivateKey } from "../utils/crypto.js";
+import { signWithWalletMessage, verifySignature, addressFromPrivateKey } from "../../utils/crypto.js";
 
 /*
  SignatureEngine provides:

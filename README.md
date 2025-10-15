@@ -23,6 +23,7 @@ Environment variables
 - `NODE_ADDRESS` — used by the anchoring client (mock) and shown in logs.
 - `ALITH_MODE` — `server` / `hybrid` etc. Controls runtime mode for the SDK.
 - `PRIVATE_KEY` / `DEMO_PRIVATE_KEY` / `WALLET_ADDRESS` — optional: if present, `IdentityManager` can derive and set a `wallet` on the identity.
+- `DISABLE_ANCHOR` — optional; set to `true` to skip on-chain anchoring during `ask()` (useful for local development or when you only need signed responses).
 
 Quick smoke test
 ----------------
@@ -84,6 +85,29 @@ lazai.setPersonality(session.getPersonality());
 const result = await lazai.ask('Explain the value of on-chain anchoring in one paragraph.');
 ```
 
+Disable anchoring (development)
+--------------------------------
+If you want to use the SDK for conversational flows without creating transactions, set the `DISABLE_ANCHOR` environment variable to `true`. This is useful while developing or when you only need signed responses.
+
+PowerShell example (set for a single command):
+```powershell
+$env:DISABLE_ANCHOR = 'true'; node test.js
+```
+
+Or set it in your `.env` file:
+```
+DISABLE_ANCHOR=true
+```
+
+In code you can check this flag before calling the anchor client (example inside `LazAIHybrid.ask()`):
+```javascript
+if (!process.env.DISABLE_ANCHOR || process.env.DISABLE_ANCHOR === 'false') {
+	const anchor = await this.blockchain.anchorData({ identity: persisted, prompt, response: aiResponse, timestamp });
+	// include anchor metadata in result
+}
+// otherwise return only the response (and optionally a signature)
+```
+
 Persona (`PersonalityCore`)
 --------------------------
 - `PersonalityCore` stores `tone`, `style`, `shortBio`, and `extra` fields and can build a short system context via `toContext()`.
@@ -103,7 +127,7 @@ Files to look at (quick)
 ------------------------
 - `src/core/IdentityManager.js` — creates and persists identity
 - `src/core/AgentConnector.js` — session attach/connector; now attaches a `PersonalityCore`
-- `src/core/LazAi.js` — `LazAIHybrid` orchestrator
+- `src/core/LazAIHybrid.js` — `LazAIHybrid` orchestrator
 - `src/core/PersonalityCore.js` — persona helper
 - `src/core/SignatureEngine.js` — high-level signing wrapper (uses `utils/crypto`)
 - `utils/storage.js` — simple JSON persistence

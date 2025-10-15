@@ -1,1 +1,1 @@
-export { LazAIHybrid } from "./core/LazAi.js";
+export { LazAIHybrid } from "./core/LazAIHybrid.js";

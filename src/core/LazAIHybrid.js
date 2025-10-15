@@ -1,6 +1,6 @@
 // src/core/LazAIHybrid.js
 import { default as IdentityManager} from "./IdentityManager.js"
-import { AlithAgent } from "./AlithClient.js";
+import { AlithAgent } from "./AlithAgent.js";
 import { LazAIClient } from "./LazAIClient.js";
 import { loadIdentity } from "../../utils/storage.js";
 import PersonalityCore from "./PersonalityCore.js";
